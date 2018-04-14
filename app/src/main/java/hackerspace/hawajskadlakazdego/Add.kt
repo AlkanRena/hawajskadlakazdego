@@ -1,15 +1,14 @@
 package hackerspace.hawajskadlakazdego
 
+import android.arch.persistence.room.Entity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 
 
-class Habbit(max: Int, current: Int =0){
-    public val max = max
-    public var current = current
-}
+@Entity
+data class Habbit(val max: Int, var current: Int)
 
 class HabbitController(max: Int, current: Int = 0, view: Button){
     val data = Habbit(max, current)
