@@ -1,90 +1,42 @@
 package hackerspace.hawajskadlakazdego
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.*
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import java.sql.Timestamp
 import android.util.Log
+import java.util.Calendar
 
-
-@Entity(tableName = "habits")
-data class Habit(
-        @PrimaryKey(autoGenerate = true)
-        var id: Long
-)
-
-@Entity(tableName = "habitrecord", foreignKeys = arrayOf(ForeignKey(entity = Habit::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("habit_id"),
-        onDelete = ForeignKey.CASCADE)))
-data class HabitRecord(@PrimaryKey var time: Long){
-    var habit_id: Long = 0
-}
-
-@Dao
-interface HabitAccess{
-    @Query("SELECT * FROM habitrecord")
-    fun getAll(): List<HabitRecord>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(records: Array<HabitRecord>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHabbits(records: Array<HabitRecord>)
-}
-
-@Database(entities = arrayOf(HabitRecord::class, Habit::class) ,exportSchema = false, version = 2)
-abstract class AppDatabase: RoomDatabase() {
-    abstract fun habitAccess(): HabitAccess
-
-    companion object {
-        private var INSTANCE: AppDatabase? = null
-
-        fun getInstance(context: Context): AppDatabase? {
-            if (INSTANCE == null) {
-                synchronized(AppDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase::class.java, "habit.db")
-                            .allowMainThreadQueries()
-                            .fallbackToDestructiveMigration().addCallback(databaseCallbacks())
-                            .build()
-                }
-            }
-            return INSTANCE
-        }
-
-        class databaseCallbacks :RoomDatabase.Callback(){
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                db.execSQL("INSERT INTO `habits`(id) VALUES (1), (2), (3), (4), (5)")
-                Log.d("database", "Initialized new database")
-            }
-        }
-
-    }
-
-    fun destroyInstance() {
-        INSTANCE = null
-    }
+fun d(msg: String){
+    Log.d("hawajska", msg)
 }
 
 class Add : AppCompatActivity() {
+    var db: AppDatabase? = null
 
+    fun getHabits(day: Calendar): List<HabitRecord>?{
+        val from: Calendar = day.clone() as Calendar
+        from.set(Calendar.HOUR, 0)
+        from.set(Calendar.MINUTE, 0)
+        val to = day.clone() as Calendar
+        to.set(Calendar.HOUR, 23)
+        to.set(Calendar.MINUTE, 59)
 
+        return this.getDB()?.habitAccess()?._getHabits(from.timeInMillis, to.timeInMillis)
+    }
+
+    fun getDB(): AppDatabase?{
+        if(this.db == null){
+            this.db = AppDatabase.getInstance(this)
+        }
+        return this.db
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-
-        var db = AppDatabase.getInstance(this)
-
-        val text = db?.habitAccess()?.getAll()?.size?.toString()
-        (findViewById(R.id.fatButton) as Button).setText(text ?: "dupa")
-        //db?.habitAccess()?.insertAll(arrayOf(HabitRecord(1)))
+        val text = this.getHabits(java.util.Calendar.getInstance())?.size
+        (findViewById(R.id.fatButton) as Button).setText(text?.toString() ?: "dupa")
 
 
     }
