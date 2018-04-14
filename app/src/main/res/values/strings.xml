@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">hawajskadlakazdego</string>
+    <string name="app_name">Hawajska dla każdego</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="fat">Tłuszcze</string>
+    <string name="meat">Mięso</string>
+    <string name="milk">Nabiał</string>
+    <string name="grain">Zboże</string>
+    <string name="vegtables">Warzywa i Owoce</string>
+    <string name="exercise">Ćwiczenia</string>
 </resources>
