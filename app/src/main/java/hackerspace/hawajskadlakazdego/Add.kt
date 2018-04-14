@@ -87,7 +87,7 @@ class Add : AppCompatActivity() {
         val c5 = HabbitController(5, 0, findViewById(R.id.fruitsButton))
         val c6 = HabbitController(10, 0, findViewById(R.id.workoutButton))
 
-
+        val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
 
 
 
