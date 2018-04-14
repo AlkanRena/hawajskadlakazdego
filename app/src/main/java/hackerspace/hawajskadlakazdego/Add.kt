@@ -1,18 +1,21 @@
 package hackerspace.hawajskadlakazdego
 
 
-import android.app.*
 import android.app.Notification
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.view.View
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
+import android.graphics.drawable.Icon
+import android.util.Log
+import javax.xml.transform.Result
 
 
 class Habbit(max: Int, current: Int =0){
@@ -38,7 +41,10 @@ class HabbitController(max: Int, current: Int = 0, view: Button){
     }
 }
 
-class Add : AppCompatActivity() {
+
+
+class NotifyController(view : Button) {
+    val view = view
 
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
@@ -47,46 +53,29 @@ class Add : AppCompatActivity() {
     private val description = "Test notification"
 
 
+//    notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    init {
+        view.setOnClickListener({
+
+        })
+    }
+}
+
+class Add : AppCompatActivity() {
+
+    private var notificationManager : NotificationManager? = null
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val navigationNotification = R.id.btn_navigation_notifications
-
-        navigationNotification.setOnClickListener {
-            val intent = Intent(this, LauncherActivity::class.java)
-            val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
-                notificationChannel.enableLights(true)
-                notificationChannel.lightColor = Color.GREEN
-                notificationChannel.enableVibration(false)
-                notificationManager.createNotificationChannel(notificationChannel)
-
-                builder = Notification.Builder(this, channelId)
-                        .setContentTitle("Msg me")
-                        .setContentText("Test notify")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-                        .setContentIntent(pendingIntent)
-            } else {
-
-                builder = Notification.Builder(this)
-                        .setContentTitle("Msg me")
-                        .setContentText("Test notify")
-                        .setSmallIcon(R.drawable.ic_launcher_background)
-                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))
-                        .setContentIntent(pendingIntent)
-            }
-
-                notificationManager.notify(1234, builder.build())
-
-
-        }
+        createNotificationChannel("hackerspace.hawajskadlakazdego","Hawajska News", "Your News Channel")
 
         val c1 = HabbitController(1, 0, findViewById(R.id.fatButton))
         val c2 = HabbitController(1, 0, findViewById(R.id.meatButton))
@@ -94,12 +83,49 @@ class Add : AppCompatActivity() {
         val c4 = HabbitController(3, 0, findViewById(R.id.grainButton))
         val c5 = HabbitController(5, 0, findViewById(R.id.fruitsButton))
         val c6 = HabbitController(10, 0, findViewById(R.id.workoutButton))
+
+        val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
+
+
+
+    }
+
+    private fun createNotificationChannel(id: String, name: String, description: String) {
+        val importance = NotificationManager.IMPORTANCE_LOW
+        val channel = NotificationChannel(id, name, importance)
+
+        channel.description = description
+        channel.enableLights(true)
+        channel.lightColor = Color.RED
+        channel.enableVibration(true)
+        channel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+
+        notificationManager?.createNotificationChannel(channel)
+    }
+
+    fun sendNotification(view: View) {
+
+        val notificationID = 101
+        val resultIntent = Intent(this, Add::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0 , resultIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+        val channelID = "hackerspace.hawajskadlakazdego"
+        val icon: Icon = Icon.createWithResource(this, android.R.drawable.ic_dialog_info)
+        val action: Notification.Action =
+                Notification.Action.Builder(icon, "Open", pendingIntent).build()
+        val notification = Notification.Builder(this@Add, channelID)
+                .setContentTitle("Example Notify")
+                .setContentText("This is example")
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setChannelId(channelID)
+                .setContentIntent(pendingIntent)
+                .setActions(action)
+                .build()
+
+        notificationManager?.notify(notificationID, notification)
     }
 
 }
 
-private fun Int.setOnClickListener(function: () -> Unit) {
 
-}
 
 
