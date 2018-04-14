@@ -151,4 +151,12 @@
         </LinearLayout>
     </LinearLayout>
 
+    <button
+        android:id="@+id/btn_navigation_notifications"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_notifications"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="40dp" />
 </android.support.constraint.ConstraintLayout>
