@@ -2,10 +2,8 @@ package hackerspace.hawajskadlakazdego
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
-import kotlinx.android.synthetic.main.activity_add.*
 
 
 class Habbit(max: Int, current: Int =0){
@@ -27,7 +25,6 @@ class HabbitController(max: Int, current: Int = 0, view: Button){
                     this.view.setBackgroundColor( Color.rgb(128, 128, 32))
                 else
                     this.view.setBackgroundColor( Color.rgb(0, 255, 32))
-            this.view.setText(this.view.text.toString() + this.data.current.toString())
         })
     }
 }
@@ -46,6 +43,7 @@ class Add : AppCompatActivity() {
         val c3 = HabbitController(2, 0, findViewById(R.id.milkButton))
         val c4 = HabbitController(3, 0, findViewById(R.id.grainButton))
         val c5 = HabbitController(5, 0, findViewById(R.id.fruitsButton))
+        val c6 = HabbitController(10, 0, findViewById(R.id.workoutButton))
     }
 
 }
