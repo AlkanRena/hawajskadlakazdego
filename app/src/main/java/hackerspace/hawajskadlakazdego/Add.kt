@@ -16,6 +16,9 @@ import android.widget.Button
 import android.graphics.drawable.Icon
 import android.util.Log
 import javax.xml.transform.Result
+import android.app.Notification.EXTRA_NOTIFICATION_ID
+
+
 
 
 class Habbit(max: Int, current: Int =0){
@@ -84,7 +87,7 @@ class Add : AppCompatActivity() {
         val c5 = HabbitController(5, 0, findViewById(R.id.fruitsButton))
         val c6 = HabbitController(10, 0, findViewById(R.id.workoutButton))
 
-        val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
+
 
 
 
@@ -105,24 +108,99 @@ class Add : AppCompatActivity() {
 
     fun sendNotification(view: View) {
 
-        val notificationID = 101
+
         val resultIntent = Intent(this, Add::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0 , resultIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+        val result1 = Intent(this, HabbitController::class.java)
+
+        val pendingIntent1 = PendingIntent.getActivity(this, 0 , result1, PendingIntent.FLAG_CANCEL_CURRENT)
+
         val channelID = "hackerspace.hawajskadlakazdego"
+
         val icon: Icon = Icon.createWithResource(this, android.R.drawable.ic_dialog_info)
         val action: Notification.Action =
                 Notification.Action.Builder(icon, "Open", pendingIntent).build()
-        val notification = Notification.Builder(this@Add, channelID)
-                .setContentTitle("Example Notify")
-                .setContentText("This is example")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setChannelId(channelID)
-                .setContentIntent(pendingIntent)
-                .setActions(action)
-                .build()
+        val prevPendingIntent: Notification.Action =
+                Notification.Action.Builder(icon, "Open", pendingIntent).build()
 
-        notificationManager?.notify(notificationID, notification)
+        val pausePendingIntent: Notification.Action =
+                Notification.Action.Builder(icon, "Open", pendingIntent).build()
+
+        val nextPendingIntent: Notification.Action =
+                Notification.Action.Builder(icon, "Open", pendingIntent).build()
+
+
+
+
+        val GROUP_KEY_NOTIFY = "group_key_notify"
+
+        var builderSummary: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("A Bundle Example")
+                .setContentText("You have 3 new messages")
+                .setGroup(GROUP_KEY_NOTIFY)
+                .setGroupSummary(true)
+
+        var builder1: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Message Fat")
+                .setContentText("")
+                .setGroup(GROUP_KEY_NOTIFY)
+
+        var builder2: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Message")
+                .setContentText("You have a new message from Caitlyn")
+                .setActions(action)
+                .setGroup(GROUP_KEY_NOTIFY)
+
+        var builder3: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Message")
+                .setContentText("You have a new message from Jason")
+                .setActions(action)
+                .setGroup(GROUP_KEY_NOTIFY)
+
+        var builder4: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Message")
+                .setContentText("You have a new message from Kassidy")
+                .setActions(action)
+                .setGroup(GROUP_KEY_NOTIFY)
+
+        var builder5: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Message")
+                .setContentText("You have a new message from Caitlyn")
+                .setActions(action)
+                .setGroup(GROUP_KEY_NOTIFY)
+
+        var builder6: Notification.Builder = Notification.Builder(this, channelID)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Message")
+                .setContentText("You have a new message from Jason")
+                .setActions(action)
+                .setGroup(GROUP_KEY_NOTIFY)
+
+        var notificationId0 = 100
+        var notificationId1 = 101
+        var notificationId2 = 102
+        var notificationId3 = 103
+        var notificationId4 = 104
+        var notificationId5 = 105
+        var notificationId6 = 106
+
+        notificationManager?.notify(notificationId1, builder1.build())
+        notificationManager?.notify(notificationId2, builder2.build())
+        notificationManager?.notify(notificationId3, builder3.build())
+        notificationManager?.notify(notificationId4, builder4.build())
+        notificationManager?.notify(notificationId5, builder5.build())
+        notificationManager?.notify(notificationId6, builder6.build())
+        notificationManager?.notify(notificationId0, builderSummary.build())
     }
+
+
 
 }
 
