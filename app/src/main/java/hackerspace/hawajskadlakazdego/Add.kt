@@ -75,6 +75,10 @@ class Add : AppCompatActivity() {
 
     }
 
+    fun hasPermissions(){
+
+    }
+
     fun share(){
         val intent = Intent(
                 Intent.ACTION_PICK,
@@ -86,62 +90,61 @@ class Add : AppCompatActivity() {
                                            permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_REQUEST_ON_SHARE -> {
-                // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
                     share()
-                } else {
-                }
+                } //else nothing to do
             }
         }
     }
 
-    public override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent) {
+    public override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent?) {
         d("elo")
         super.onActivityResult(reqCode, resultCode, data)
 
         when (reqCode) {
             PICK_CONTACT -> if (resultCode == Activity.RESULT_OK) {
                 d("zaczynamy")
-                val returnUri = data.data
-                val cursor = contentResolver.query(returnUri, null, null, null, null)
+                try {
+                    val returnUri = data!!.data!!
+                    val cursor = contentResolver.query(returnUri, null, null, null, null)
 
-                if (cursor!!.moveToNext()) {
-                    val columnIndex_ID = cursor.getColumnIndex(ContactsContract.Contacts._ID)
-                    val contactID = cursor.getString(columnIndex_ID)
+                    if (cursor!!.moveToNext()) {
+                        val columnIndex_ID = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+                        val contactID = cursor.getString(columnIndex_ID)
 
-                    val columnIndex_HASPHONENUMBER = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
-                    val stringHasPhoneNumber = cursor.getString(columnIndex_HASPHONENUMBER)
+                        val columnIndex_HASPHONENUMBER = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
+                        val stringHasPhoneNumber = cursor.getString(columnIndex_HASPHONENUMBER)
 
-                    if (stringHasPhoneNumber.equals("1", ignoreCase = true)) {
-                        val cursorNum = contentResolver.query(
-                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                                null,
-                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactID, null, null)
+                        if (stringHasPhoneNumber.equals("1", ignoreCase = true)) {
+                            val cursorNum = contentResolver.query(
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                    null,
+                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactID, null, null)
 
-                        //Get the first phone number
-                        if (cursorNum!!.moveToNext()) {
-                            val columnIndex_number = cursorNum.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                            val stringNumber = cursorNum.getString(columnIndex_number)
-                            d(stringNumber)
-                            val phoneIntent = Intent(Intent.ACTION_CALL)
-                            phoneIntent.setData(Uri.parse("tel:" + stringNumber));
-                            try {
-                                this.startActivity(phoneIntent)
-                            }catch(e: Exception){
+                            //Get the first phone number
+                            if (cursorNum!!.moveToNext()) {
+                                val columnIndex_number = cursorNum.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                                val stringNumber = cursorNum.getString(columnIndex_number)
+                                d(stringNumber)
+                                val phoneIntent = Intent(Intent.ACTION_CALL)
+                                phoneIntent.setData(Uri.parse("tel:" + stringNumber));
+                                try {
+                                    this.startActivity(phoneIntent)
+                                } catch (e: Exception) {
 
+                                }
                             }
+
+                        } else {
+                            d("NO Phone Number")
                         }
 
+
                     } else {
-                        d("NO Phone Number")
+                        Toast.makeText(applicationContext, "NO data!", Toast.LENGTH_LONG).show()
                     }
-
-
-                } else {
-                    Toast.makeText(applicationContext, "NO data!", Toast.LENGTH_LONG).show()
                 }
+                catch (e:Exception){}
 
 
             }
