@@ -26,19 +26,7 @@ class Add : AppCompatActivity() {
     var db: AppDatabase? = null
     var habitViews: Map<Habit, HabitViewController>? = null
 
-    fun getHabits(day: Calendar): List<HabitRecord>?{
-        val from: Calendar = day.clone() as Calendar
-        from.set(Calendar.HOUR, 0)
-        from.set(Calendar.MINUTE, 0)
-        val to = day.clone() as Calendar
-        to.set(Calendar.HOUR, 23)
-        to.set(Calendar.MINUTE, 59)
-
-        return this.getDB()?.habitAccess()?.getHabitRecords(from.timeInMillis, to.timeInMillis)
-    }
     private var notificationManager : NotificationManager? = null
-
-
 
     fun getDB(): AppDatabase?{
         if(this.db == null){
@@ -51,8 +39,6 @@ class Add : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-        val text = this.getHabits(java.util.Calendar.getInstance())?.size
-        (findViewById(R.id.fatButton) as Button).setText(text?.toString() ?: "dupa")
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -61,9 +47,6 @@ class Add : AppCompatActivity() {
 
         initViews()
         val button = sendNotification(findViewById(R.id.workoutButton))
-
-
-
     }
 
     private fun initViews() {
