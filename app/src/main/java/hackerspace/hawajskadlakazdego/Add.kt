@@ -16,8 +16,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.graphics.drawable.Icon
 import android.util.Log
-import javax.xml.transform.Result
-import android.app.Notification.EXTRA_NOTIFICATION_ID
 
 fun d(msg: String){
     Log.d("hawajska", msg)
@@ -46,6 +44,7 @@ class NotifyController(view : Button) {
 
 class Add : AppCompatActivity() {
     var db: AppDatabase? = null
+    var habitViews: Map<Habit, HabitView>? = null
 
     fun getHabits(day: Calendar): List<HabitRecord>?{
         val from: Calendar = day.clone() as Calendar
@@ -81,7 +80,36 @@ class Add : AppCompatActivity() {
 
 
         val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
+        val hv_fat = HabitView(
+                findViewById(R.id.fatButton), 0, 1, resources.getString(R.string.fat), Habit.Fat.ordinal
+        )
+        val hv_meat = HabitView(
+                findViewById(R.id.meatButton), 0, 1, resources.getString(R.string.meat), Habit.Meat.ordinal
+        )
+        val hv_milk = HabitView(
+                findViewById(R.id.milkButton), 0, 1, resources.getString(R.string.milk), Habit.Milk.ordinal
+        )
+        val hv_grain = HabitView(
+                findViewById(R.id.grainButton), 0, 1, resources.getString(R.string.grain), Habit.Grain.ordinal
+        )
+        val hv_fruits = HabitView(
+                findViewById(R.id.fruitsButton), 0, 1, resources.getString(R.string.fruits), Habit.Fruits.ordinal
+        )
+        val hv_workout = HabitView(
+                findViewById(R.id.workoutButton), 0, 1, resources.getString(R.string.workout), Habit.Workout.ordinal
+        )
 
+        this.habitViews = mapOf(
+            Habit.Fat to hv_fat,
+            Habit.Meat to hv_meat,
+            Habit.Milk to hv_milk,
+            Habit.Grain to hv_grain,
+            Habit.Fruits to hv_fruits,
+            Habit.Workout to hv_workout
+        )
+
+        this.habitViews?.forEach{
+            it.value.redraw() }
 
 
     }

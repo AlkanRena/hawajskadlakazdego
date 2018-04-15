@@ -7,7 +7,7 @@ import android.util.Log
 import java.util.*
 
 enum class Habit{
-    Fat, Meat, Milk, Grain, Vegetables, Exercise
+    Fat, Meat, Milk, Grain, Fruits, Workout
 }
 
 @Entity(tableName = "habits")

@@ -7,6 +7,6 @@
     <string name="meat">Mięso</string>
     <string name="milk">Nabiał</string>
     <string name="grain">Zboże</string>
-    <string name="vegtables">Warzywa i Owoce</string>
-    <string name="exercise">Ćwiczenia</string>
+    <string name="fruits">Warzywa i Owoce</string>
+    <string name="workout">Ćwiczenia</string>
 </resources>

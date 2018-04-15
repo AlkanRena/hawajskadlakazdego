@@ -136,8 +136,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="11"
-                android:contentDescription="@string/vegtables"
-                android:text="@string/vegtables" />
+                android:contentDescription="@string/fruits"
+                android:text="@string/fruits" />
         </LinearLayout>
 
         <LinearLayout
@@ -152,8 +152,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="13"
-                android:contentDescription="@string/exercise"
-                android:text="@string/exercise" />
+                android:contentDescription="@string/workout"
+                android:text="@string/workout" />
         </LinearLayout>
     </LinearLayout>
 
