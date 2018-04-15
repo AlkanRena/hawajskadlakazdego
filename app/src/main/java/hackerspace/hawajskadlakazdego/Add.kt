@@ -89,9 +89,11 @@ class Add : AppCompatActivity() {
                 share()
 
         })
-        findViewById<View>(R.id.donate).setOnClickListener({
 
+        val donate = findViewById<View>(R.id.donate)
+        donate.setOnClickListener({
 
+            setContentView(R.layout.activity_donate)
 
         })
 

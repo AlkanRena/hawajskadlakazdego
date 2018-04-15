@@ -2,15 +2,35 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/returnToAdd"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Donate">
 
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="270dp" />
+        android:text="@string/donate_text1"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="105dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/donate_text2"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="193dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/donate_text3"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="297dp" />
 </android.support.constraint.ConstraintLayout>

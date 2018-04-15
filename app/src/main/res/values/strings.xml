@@ -10,4 +10,7 @@
     <string name="fruits">Warzywa i Owoce</string>title_yesterday
     <string name="workout">Ćwiczenia</string>
     <string name="title_yesterday">Wczoraj</string>
+    <string name="donate_text1">PLS DONATE US</string>
+    <string name="donate_text2">We need money for pizza</string>
+    <string name="donate_text3">the hawaian pizza</string>
 </resources>
