@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:weightSum="13">
 
@@ -43,19 +44,20 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
+                android:gravity="center_vertical"
                 android:text="@string/fat" />
 
             <Button
                 android:id="@+id/fatButton"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:background="#b6b6b6"
                 android:contentDescription="@string/fat"
-                android:drawableBottom="@drawable/fries"
+                android:drawableTop="@drawable/fries"
+                android:paddingTop="18dp"
                 android:textColor="#101010"
-                style="@style/Widget.AppCompat.Button"
-                tools:text="@string/fat" />
+                android:background="@drawable/shape"/>
 
         </LinearLayout>
 
@@ -63,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:weightSum="13">
 
@@ -71,6 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
+                android:gravity="center_vertical"
                 android:text="@string/meat" />
 
             <Button
@@ -78,10 +82,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:background="#b6b6b6"
                 android:contentDescription="@string/meat"
-                android:drawableBottom="@drawable/meat"
-                android:textColor="#101010" />
+                android:drawableTop="@drawable/meat"
+                android:paddingTop="18dp"
+                android:textColor="#101010"
+                android:background="@drawable/shape"/>
 
         </LinearLayout>
 
@@ -89,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:weightSum="13">
 
@@ -97,6 +103,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
+                android:gravity="center_vertical"
                 android:text="@string/milk" />
 
             <Button
@@ -104,16 +111,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#b6b6b6"
                 android:contentDescription="@string/milk"
-                android:drawableBottom="@drawable/cheese"
-                android:textColor="#101010" />
+                android:drawableTop="@drawable/cheese"
+                android:paddingTop="18dp"
+                android:background="@drawable/shape" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:weightSum="13">
 
@@ -123,6 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
+                android:gravity="center_vertical"
                 android:text="@string/grain" />
 
             <Button
@@ -130,10 +139,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
-                android:background="#b6b6b6"
                 android:contentDescription="@string/grain"
-                android:drawableBottom="@drawable/bread"
-                android:textColor="#101010" />
+                android:drawableTop="@drawable/bread"
+                android:paddingTop="18dp"
+                android:background="@drawable/shape" />
         </LinearLayout>
 
 
@@ -141,6 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:weightSum="13">
 
@@ -150,6 +160,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
+                android:gravity="center_vertical"
                 android:text="@string/fruits" />
 
             <Button
@@ -157,16 +168,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
-                android:background="#b6b6b6"
                 android:contentDescription="@string/fruits"
-                android:drawableBottom="@drawable/apple"
-                android:textColor="#101010" />
+                android:drawableTop="@drawable/apple"
+                android:paddingTop="18dp"
+                android:textColor="#101010"
+                android:background="@drawable/shape"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginBottom="4dp"
             android:orientation="horizontal"
             android:weightSum="13">
 
@@ -174,15 +187,19 @@
                 android:id="@+id/workoutLabel"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="6"
+                android:layout_weight="5"
+                android:gravity="center_vertical"
                 android:text="@string/fruits" />
             <Button
                 android:id="@+id/workoutButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="8"
                 android:contentDescription="@string/workout"
-                android:text="@string/workout" />
+                android:drawableTop="@drawable/workout"
+                android:paddingTop="18dp"
+                android:textColor="#101010"
+                android:background="@drawable/shape"/>
         </LinearLayout>
     </LinearLayout>
 
