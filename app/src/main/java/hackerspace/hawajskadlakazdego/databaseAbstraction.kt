@@ -20,9 +20,9 @@ class DatabaseAbstraction(val db: AppDatabase){
                 from.timeInMillis, to.timeInMillis)
     }
 
-    fun addHabitAction(habit: Habit){
+    fun addHabitAction(habit: Habit, timeProvider: ()->Calendar){
         this.dao.insertAll(arrayOf(HabitRecord(
-           Calendar.getInstance().timeInMillis, habit.ordinal
+           timeProvider().timeInMillis, habit.ordinal
         )))
     }
 

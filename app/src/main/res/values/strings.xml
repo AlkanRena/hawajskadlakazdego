@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Piramida zdrowych nawyków</string>
-    <string name="title_home">Home</string>
+    <string name="title_today">Dzisiaj</string>
     <string name="title_dashboard">Wyniki</string>
     <string name="title_notifications">Powiadomienia</string>
     <string name="fat">Tłuszcze</string>
     <string name="meat">Mięso</string>
     <string name="milk">Nabiał</string>
     <string name="grain">Zboże</string>
-    <string name="fruits">Warzywa i Owoce</string>
+    <string name="fruits">Warzywa i Owoce</string>title_yesterday
     <string name="workout">Ćwiczenia</string>
+    <string name="title_yesterday">Wczoraj</string>
 </resources>

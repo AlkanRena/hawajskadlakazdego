@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/navigation_previous_day"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_today"
+        android:icon="@drawable/ic_today_black_48px"
+        android:title="@string/title_today" />
+
 
     <item
         android:id="@+id/navigation_share"
@@ -21,8 +19,8 @@
         android:title="Donate" />
 
     <item
-        android:id="@+id/navigation_next_day"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_yesterday"
+        android:icon="@drawable/ic_history_black_48px"
+        android:title="@string/title_yesterday" />
 
 </menu>

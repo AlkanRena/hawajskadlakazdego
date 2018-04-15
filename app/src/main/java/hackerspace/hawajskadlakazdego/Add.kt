@@ -22,8 +22,6 @@ import android.content.pm.PackageManager
 import android.support.design.internal.BottomNavigationItemView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.view.Menu
-import android.view.MenuItem
 import java.util.*
 
 
@@ -61,8 +59,8 @@ class Add : AppCompatActivity() {
         rebuildViewControllers({ Calendar.getInstance()})
         val button = sendNotification(findViewById(R.id.workoutButton))
 
-        val prevDayIcon = findViewById<View>(R.id.navigation_next_day)
-        val nextDayIcon = findViewById<View>(R.id.navigation_previous_day)
+        val prevDayIcon = findViewById<View>(R.id.navigation_today)
+        val nextDayIcon = findViewById<View>(R.id.navigation_yesterday)
         prevDayIcon.setOnClickListener({
             this.rebuildViewControllers { java.util.Calendar.getInstance() }
             (prevDayIcon as BottomNavigationItemView).setChecked(true)

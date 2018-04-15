@@ -15,7 +15,7 @@ class HabitViewController(
     }
 
     fun increment(){
-        this.db.addHabitAction(this.habit)
+        this.db.addHabitAction(this.habit, this.timeProvider)
         this.redraw()
     }
 
