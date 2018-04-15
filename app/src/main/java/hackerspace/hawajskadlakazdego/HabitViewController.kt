@@ -6,7 +6,8 @@ import java.util.*
 import android.graphics.Color
 
 class HabitViewController(
-        val view: Button, val label: TextView, val habit: Habit, val db: DatabaseAbstraction){
+        val view: Button, val label: TextView, val habit: Habit, val db: DatabaseAbstraction,
+        val timeProvider: ()->Calendar){
     val habitInfo = db.getHabitInfo(this.habit.ordinal)
 
     init {
@@ -14,15 +15,15 @@ class HabitViewController(
     }
 
     fun increment(){
-        this.db.addHabitAction(this.habit)
+        this.db.addHabitAction(this.habit, this.timeProvider)
         this.redraw()
     }
 
     fun redraw(){
         this.label.setText(this.habitInfo.label + " " +
-                this.db.countActionsForDay(this.habit, Calendar.getInstance()) + "/" +
+                this.db.countActionsForDay(this.habit, this.timeProvider()) + "/" +
                 this.habitInfo.top.toString())
-        val counter = this.db.countActionsForDay(this.habit, Calendar.getInstance()).toFloat() / this.habitInfo.top.toFloat()
+        val counter = this.db.countActionsForDay(this.habit, this.timeProvider()).toFloat() / this.habitInfo.top.toFloat()
         if (counter < 0.2) {
             this.view.setBackgroundResource(R.drawable.shape1_4)
         } else if (counter < 0.4) {

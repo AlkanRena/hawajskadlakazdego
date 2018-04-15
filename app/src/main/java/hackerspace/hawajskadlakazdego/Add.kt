@@ -1,7 +1,5 @@
 package hackerspace.hawajskadlakazdego
 
-import java.util.Calendar
-
 import android.app.Notification
 
 import android.app.NotificationChannel
@@ -17,15 +15,14 @@ import android.widget.Button
 import android.graphics.drawable.Icon
 import android.util.Log
 import android.provider.ContactsContract
-import android.provider.Contacts.People
 import android.app.Activity
 import android.net.Uri
 import android.widget.Toast
-import android.R.attr.data
 import android.content.pm.PackageManager
+import android.support.design.internal.BottomNavigationItemView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import java.util.jar.Manifest
+import java.util.*
 
 
 
@@ -61,8 +58,26 @@ class Add : AppCompatActivity() {
         createNotificationChannel("hackerspace.hawajskadlakazdego","Hawajska News", "Your News Channel")
 
 
-        initViews()
+        rebuildViewControllers({ Calendar.getInstance()})
         val button = sendNotification(findViewById(R.id.workoutButton))
+
+        val prevDayIcon = findViewById<View>(R.id.navigation_today)
+        val nextDayIcon = findViewById<View>(R.id.navigation_yesterday)
+        prevDayIcon.setOnClickListener({
+            this.rebuildViewControllers { java.util.Calendar.getInstance() }
+            (prevDayIcon as BottomNavigationItemView).setChecked(true)
+            (nextDayIcon as BottomNavigationItemView).setChecked(false)
+            //nextDayIcon.
+        })
+        nextDayIcon.setOnClickListener({
+            this.rebuildViewControllers {
+            var timeProvider = java.util.Calendar.getInstance()
+            timeProvider.add(Calendar.DATE, -1)
+            timeProvider}
+            (prevDayIcon as BottomNavigationItemView).setChecked(false)
+            (nextDayIcon as BottomNavigationItemView).setChecked(true)
+
+        })
 
         val permissions = arrayOf(android.Manifest.permission.CALL_PHONE, android.Manifest.permission.READ_CONTACTS)
         findViewById<View>(R.id.navigation_share).setOnClickListener({
@@ -77,11 +92,14 @@ class Add : AppCompatActivity() {
         findViewById<View>(R.id.donate).setOnClickListener({
 
 
+
         })
 
     }
 
+
     fun share(){
+        // Open android contacts to let the user choose a friend to call
         val intent = Intent(
                 Intent.ACTION_PICK,
                 ContactsContract.Contacts.CONTENT_URI)
@@ -100,12 +118,11 @@ class Add : AppCompatActivity() {
     }
 
     public override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent?) {
-        d("elo")
         super.onActivityResult(reqCode, resultCode, data)
 
         when (reqCode) {
             PICK_CONTACT -> if (resultCode == Activity.RESULT_OK) {
-                d("zaczynamy")
+                // Get selected contact phone number and call it
                 try {
                     val returnUri = data!!.data!!
                     val cursor = contentResolver.query(returnUri, null, null, null, null)
@@ -153,31 +170,27 @@ class Add : AppCompatActivity() {
         }
     }
 
-    private fun getPhoneNumber(data: Intent){
-
-    }
-
-    private fun initViews() {
+    private fun rebuildViewControllers(timeProvider: ()->Calendar) {
 
         val dbAbstraction = DatabaseAbstraction(this.getDB()!!)
         val hvFat = HabitViewController(findViewById(R.id.fatButton),
                 findViewById(R.id.fatLabel),
-                Habit.Fat, dbAbstraction)
+                Habit.Fat, dbAbstraction, timeProvider)
         val hvMeat = HabitViewController(findViewById(R.id.meatButton),
                 findViewById(R.id.meatLabel),
-                Habit.Meat, dbAbstraction)
+                Habit.Meat, dbAbstraction, timeProvider)
         val hvMilk = HabitViewController(findViewById(R.id.milkButton),
                 findViewById(R.id.milkLabel),
-                Habit.Milk, dbAbstraction)
+                Habit.Milk, dbAbstraction, timeProvider)
         val hvGrain = HabitViewController(findViewById(R.id.grainButton),
                 findViewById(R.id.grainLabel),
-                Habit.Grain, dbAbstraction)
+                Habit.Grain, dbAbstraction, timeProvider)
         val hvFruits = HabitViewController(findViewById(R.id.fruitsButton),
                 findViewById(R.id.fruitLabel),
-                Habit.Fruits, dbAbstraction)
+                Habit.Fruits, dbAbstraction, timeProvider)
         val hvWorkout = HabitViewController(findViewById(R.id.workoutButton),
                 findViewById(R.id.workoutLabel),
-                Habit.Workout, dbAbstraction)
+                Habit.Workout, dbAbstraction, timeProvider)
 
         this.habitViews = mapOf(
                 Habit.Fat to hvFat,
