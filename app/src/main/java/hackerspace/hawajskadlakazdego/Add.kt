@@ -22,26 +22,6 @@ fun d(msg: String){
 }
 
 
-
-class NotifyController(view : Button) {
-    val view = view
-
-    lateinit var notificationManager : NotificationManager
-    lateinit var notificationChannel : NotificationChannel
-    lateinit var builder : Notification.Builder
-    private var channelId = "hackerspace.hawajskadlakazdego"
-    private val description = "Test notification"
-
-
-//    notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    init {
-        view.setOnClickListener({
-
-        })
-    }
-}
-
 class Add : AppCompatActivity() {
     var db: AppDatabase? = null
     var habitViews: Map<Habit, HabitView>? = null
@@ -79,7 +59,7 @@ class Add : AppCompatActivity() {
         createNotificationChannel("hackerspace.hawajskadlakazdego","Hawajska News", "Your News Channel")
 
 
-        val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
+        val button = sendNotification(findViewById(R.id.workoutButton))
         val hv_fat = HabitView(
                 findViewById(R.id.fatButton), 0, 1, resources.getString(R.string.fat), Habit.Fat.ordinal
         )
