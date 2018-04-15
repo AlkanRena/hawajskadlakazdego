@@ -44,7 +44,7 @@ class NotifyController(view : Button) {
 
 class Add : AppCompatActivity() {
     var db: AppDatabase? = null
-    var habitViews: Map<Habit, HabitView>? = null
+    var habitViews: Map<Habit, HabitViewController>? = null
 
     fun getHabits(day: Calendar): List<HabitRecord>?{
         val from: Calendar = day.clone() as Calendar
@@ -54,7 +54,7 @@ class Add : AppCompatActivity() {
         to.set(Calendar.HOUR, 23)
         to.set(Calendar.MINUTE, 59)
 
-        return this.getDB()?.habitAccess()?._getHabits(from.timeInMillis, to.timeInMillis)
+        return this.getDB()?.habitAccess()?.getHabitRecords(from.timeInMillis, to.timeInMillis)
     }
     private var notificationManager : NotificationManager? = null
 
@@ -80,38 +80,39 @@ class Add : AppCompatActivity() {
 
 
         val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
-        val hv_fat = HabitView(
-                findViewById(R.id.fatButton), 0, 1, resources.getString(R.string.fat), Habit.Fat.ordinal
-        )
-        val hv_meat = HabitView(
-                findViewById(R.id.meatButton), 0, 1, resources.getString(R.string.meat), Habit.Meat.ordinal
-        )
-        val hv_milk = HabitView(
-                findViewById(R.id.milkButton), 0, 1, resources.getString(R.string.milk), Habit.Milk.ordinal
-        )
-        val hv_grain = HabitView(
-                findViewById(R.id.grainButton), 0, 1, resources.getString(R.string.grain), Habit.Grain.ordinal
-        )
-        val hv_fruits = HabitView(
-                findViewById(R.id.fruitsButton), 0, 1, resources.getString(R.string.fruits), Habit.Fruits.ordinal
-        )
-        val hv_workout = HabitView(
-                findViewById(R.id.workoutButton), 0, 1, resources.getString(R.string.workout), Habit.Workout.ordinal
-        )
+        initViews()
+
+
+    }
+
+    private fun initViews() {
+
+        val dbAbstraction = DatabaseAbstraction(this.getDB()!!)
+        val hvFat = HabitViewController(findViewById(R.id.fatButton),
+                Habit.Fat, dbAbstraction)
+        val hvMeat = HabitViewController(findViewById(R.id.meatButton),
+                Habit.Meat, dbAbstraction)
+        val hvMilk = HabitViewController(findViewById(R.id.milkButton),
+                Habit.Milk, dbAbstraction)
+        val hvGrain = HabitViewController(findViewById(R.id.grainButton),
+                Habit.Grain, dbAbstraction)
+        val hvFruits = HabitViewController(findViewById(R.id.fruitsButton),
+                Habit.Fruits, dbAbstraction)
+        val hvWorkout = HabitViewController(findViewById(R.id.workoutButton),
+                Habit.Workout, dbAbstraction)
 
         this.habitViews = mapOf(
-            Habit.Fat to hv_fat,
-            Habit.Meat to hv_meat,
-            Habit.Milk to hv_milk,
-            Habit.Grain to hv_grain,
-            Habit.Fruits to hv_fruits,
-            Habit.Workout to hv_workout
+                Habit.Fat to hvFat,
+                Habit.Meat to hvMeat,
+                Habit.Milk to hvMilk,
+                Habit.Grain to hvGrain,
+                Habit.Fruits to hvFruits,
+                Habit.Workout to hvWorkout
         )
 
-        this.habitViews?.forEach{
-            it.value.redraw() }
-
-
+        this.habitViews?.forEach {
+            it.value.redraw()
+        }
     }
 
     private fun createNotificationChannel(id: String, name: String, description: String) {

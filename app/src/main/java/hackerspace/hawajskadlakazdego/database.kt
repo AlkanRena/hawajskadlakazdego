@@ -11,26 +11,34 @@ enum class Habit{
 }
 
 @Entity(tableName = "habits")
-data class HabitsTable(
-        @PrimaryKey(autoGenerate = true)
-        var id: Long
+data class HabitInfo(
+    @PrimaryKey(autoGenerate = true)
+    var id: Long,
+    var top: Int,
+    var label: String
 )
 
-@Entity(tableName = "habitrecord", foreignKeys = arrayOf(ForeignKey(entity = HabitsTable::class,
+@Entity(tableName = "habitrecord", foreignKeys = arrayOf(ForeignKey(entity = HabitInfo::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("habit_id"),
         onDelete = ForeignKey.CASCADE)))
-data class HabitRecord(@PrimaryKey var time: Long){
-    var habit_id: Long = 0
-}
+data class HabitRecord(
+        @PrimaryKey var time: Long,
+        var habit_id: Int){}
 
 @Dao
 interface HabitAccess{
     @Query("SELECT * FROM habitrecord")
     fun getAll(): List<HabitRecord>
 
+    @Query("SELECT * FROM habits WHERE id= :habitId LIMIT 1 ")
+    fun getHabitInfo(habitId: Int): HabitInfo
+
+    @Query("SELECT count(*) FROM habitrecord WHERE habit_id=:habitId AND time BETWEEN :from AND :to")
+    fun countHabitActions(habitId: Int, from: Long, to: Long): Int
+
     @Query("SELECT * FROM habitrecord WHERE time BETWEEN :from AND :to")
-    fun _getHabits(from: Long, to: Long): List<HabitRecord>
+    fun getHabitRecords(from: Long, to: Long): List<HabitRecord>
 
     /*fun getHabits( day: Calendar): List<HabitRecord> {
     }*/
@@ -43,7 +51,7 @@ interface HabitAccess{
 
 }
 
-@Database(entities = arrayOf(HabitRecord::class, HabitsTable::class) ,exportSchema = false, version = 2)
+@Database(entities = arrayOf(HabitRecord::class, HabitInfo::class) ,exportSchema = false, version = 2)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun habitAccess(): HabitAccess
 
@@ -66,7 +74,13 @@ abstract class AppDatabase: RoomDatabase() {
         class databaseCallbacks : Callback(){
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                db.execSQL("INSERT INTO `habits`(id) VALUES (1), (2), (3), (4), (5)")
+                db.execSQL("INSERT INTO `habits`(id, label, top) VALUES " +
+                        "(" + Habit.Workout.ordinal + ", 'Ćwiczenia', 7 ), " +
+                        "(" + Habit.Fruits.ordinal + ", 'Warzywa i owoce', 5 ), " +
+                        "(" + Habit.Grain.ordinal + ", 'Produkty pełnoziarniste', 3 ), " +
+                        "(" + Habit.Milk.ordinal + ", 'Nabiał', 2 ), " +
+                        "(" + Habit.Meat.ordinal + ", 'Mięso', 1 ), " +
+                        "(" + Habit.Fat.ordinal + ", 'Tłuszcze, orzechy', 1 );")
                 Log.d("hawajska", "Initialized new database")
                 val now = Calendar.getInstance()
                 now.set(Calendar.HOUR, 0)
