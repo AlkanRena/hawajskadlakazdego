@@ -28,6 +28,8 @@ import android.support.v4.content.ContextCompat
 import java.util.jar.Manifest
 
 
+
+
 fun d(msg: String){
     Log.d("hawajska", msg)
 }
@@ -72,10 +74,10 @@ class Add : AppCompatActivity() {
                 share()
 
         })
+        findViewById<View>(R.id.donate).setOnClickListener({
 
-    }
 
-    fun hasPermissions(){
+        })
 
     }
 
