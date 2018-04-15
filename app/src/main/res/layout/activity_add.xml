@@ -20,15 +20,16 @@
     </android.support.design.widget.BottomNavigationView>
 
     <LinearLayout
-        android:layout_width="358dp"
+        android:layout_width="387dp"
         android:layout_height="533dp"
         android:gravity="center"
+        android:isScrollContainer="true"
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:paddingTop="16dp"
         android:weightSum="6"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,17 +38,23 @@
             android:orientation="horizontal"
             android:weightSum="13">
 
-            <Space
+            <TextView
+                android:id="@+id/fatLabel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5" />
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:text="@string/fat" />
 
             <Button
                 android:id="@+id/fatButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:text="@string/fat"
+                android:background="#b6b6b6"
+                android:contentDescription="@string/fat"
+                android:drawableBottom="@drawable/fries"
+                android:textColor="#101010"
+                style="@style/Widget.AppCompat.Button"
                 tools:text="@string/fat" />
 
         </LinearLayout>
@@ -59,18 +66,22 @@
             android:orientation="horizontal"
             android:weightSum="13">
 
-            <Space
+            <TextView
+                android:id="@+id/meatLabel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4" />
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:text="@string/meat" />
 
             <Button
                 android:id="@+id/meatButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="4"
+                android:background="#b6b6b6"
                 android:contentDescription="@string/meat"
-                android:text="@string/meat" />
+                android:drawableBottom="@drawable/meat"
+                android:textColor="#101010" />
 
         </LinearLayout>
 
@@ -81,18 +92,22 @@
             android:orientation="horizontal"
             android:weightSum="13">
 
-            <Space
+            <TextView
+                android:id="@+id/milkLabel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="@string/milk" />
 
             <Button
                 android:id="@+id/milkButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="5"
+                android:background="#b6b6b6"
                 android:contentDescription="@string/milk"
-                android:text="@string/milk" />
+                android:drawableBottom="@drawable/cheese"
+                android:textColor="#101010" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,18 +118,22 @@
             android:weightSum="13">
 
 
-            <Space
+            <TextView
+                android:id="@+id/grainLabel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:text="@string/grain" />
 
             <Button
                 android:id="@+id/grainButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="9"
+                android:layout_weight="6"
+                android:background="#b6b6b6"
                 android:contentDescription="@string/grain"
-                android:text="@string/grain" />
+                android:drawableBottom="@drawable/bread"
+                android:textColor="#101010" />
         </LinearLayout>
 
 
@@ -126,18 +145,22 @@
             android:weightSum="13">
 
 
-            <Space
+            <TextView
+                android:id="@+id/fruitLabel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:text="@string/fruits" />
 
             <Button
                 android:id="@+id/fruitsButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="11"
+                android:layout_weight="7"
+                android:background="#b6b6b6"
                 android:contentDescription="@string/fruits"
-                android:text="@string/fruits" />
+                android:drawableBottom="@drawable/apple"
+                android:textColor="#101010" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,22 +170,21 @@
             android:orientation="horizontal"
             android:weightSum="13">
 
+            <TextView
+                android:id="@+id/workoutLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:text="@string/fruits" />
             <Button
                 android:id="@+id/workoutButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="13"
+                android:layout_weight="7"
                 android:contentDescription="@string/workout"
                 android:text="@string/workout" />
         </LinearLayout>
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/btn_navigation_notifications"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="339dp"
-        tools:layout_editor_absoluteY="106dp" />
 </android.support.constraint.ConstraintLayout>

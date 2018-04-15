@@ -22,26 +22,6 @@ fun d(msg: String){
 }
 
 
-
-class NotifyController(view : Button) {
-    val view = view
-
-    lateinit var notificationManager : NotificationManager
-    lateinit var notificationChannel : NotificationChannel
-    lateinit var builder : Notification.Builder
-    private var channelId = "hackerspace.hawajskadlakazdego"
-    private val description = "Test notification"
-
-
-//    notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-    init {
-        view.setOnClickListener({
-
-        })
-    }
-}
-
 class Add : AppCompatActivity() {
     var db: AppDatabase? = null
     var habitViews: Map<Habit, HabitViewController>? = null
@@ -79,8 +59,9 @@ class Add : AppCompatActivity() {
         createNotificationChannel("hackerspace.hawajskadlakazdego","Hawajska News", "Your News Channel")
 
 
-        val button = sendNotification(findViewById(R.id.btn_navigation_notifications))
         initViews()
+        val button = sendNotification(findViewById(R.id.workoutButton))
+
 
 
     }
@@ -89,16 +70,22 @@ class Add : AppCompatActivity() {
 
         val dbAbstraction = DatabaseAbstraction(this.getDB()!!)
         val hvFat = HabitViewController(findViewById(R.id.fatButton),
+                findViewById(R.id.fatLabel),
                 Habit.Fat, dbAbstraction)
         val hvMeat = HabitViewController(findViewById(R.id.meatButton),
+                findViewById(R.id.meatLabel),
                 Habit.Meat, dbAbstraction)
         val hvMilk = HabitViewController(findViewById(R.id.milkButton),
+                findViewById(R.id.milkLabel),
                 Habit.Milk, dbAbstraction)
         val hvGrain = HabitViewController(findViewById(R.id.grainButton),
+                findViewById(R.id.grainLabel),
                 Habit.Grain, dbAbstraction)
         val hvFruits = HabitViewController(findViewById(R.id.fruitsButton),
+                findViewById(R.id.fruitLabel),
                 Habit.Fruits, dbAbstraction)
         val hvWorkout = HabitViewController(findViewById(R.id.workoutButton),
+                findViewById(R.id.workoutLabel),
                 Habit.Workout, dbAbstraction)
 
         this.habitViews = mapOf(
