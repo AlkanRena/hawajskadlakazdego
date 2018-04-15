@@ -11,6 +11,11 @@
         android:icon="@drawable/ic_show_chart_black_24px"
         android:title="@string/title_dashboard" />
 
+    <item
+        android:id="@+id/navigation_share"
+        android:icon="@drawable/ic_show_chart_black_24px"
+        android:title="@string/title_dashboard"/>
+
 
 
 </menu>

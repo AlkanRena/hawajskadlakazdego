@@ -20,7 +20,7 @@
     </android.support.design.widget.BottomNavigationView>
 
     <LinearLayout
-        android:layout_width="387dp"
+        android:layout_width="384dp"
         android:layout_height="533dp"
         android:gravity="center"
         android:isScrollContainer="true"
@@ -47,6 +47,7 @@
 
             <Button
                 android:id="@+id/fatButton"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -54,7 +55,6 @@
                 android:contentDescription="@string/fat"
                 android:drawableBottom="@drawable/fries"
                 android:textColor="#101010"
-                style="@style/Widget.AppCompat.Button"
                 tools:text="@string/fat" />
 
         </LinearLayout>
@@ -176,6 +176,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:text="@string/fruits" />
+
             <Button
                 android:id="@+id/workoutButton"
                 android:layout_width="0dp"

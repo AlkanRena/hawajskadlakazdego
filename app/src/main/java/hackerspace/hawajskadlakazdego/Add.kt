@@ -16,6 +16,17 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.graphics.drawable.Icon
 import android.util.Log
+import android.provider.ContactsContract
+import android.provider.Contacts.People
+import android.app.Activity
+import android.net.Uri
+import android.widget.Toast
+import android.R.attr.data
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import java.util.jar.Manifest
+
 
 fun d(msg: String){
     Log.d("hawajska", msg)
@@ -35,6 +46,9 @@ class Add : AppCompatActivity() {
         return this.db
     }
 
+    val PERMISSION_REQUEST = 1
+    val PERMISSION_REQUEST_ON_SHARE = 2
+    val PICK_CONTACT = 0
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -47,6 +61,95 @@ class Add : AppCompatActivity() {
 
         initViews()
         val button = sendNotification(findViewById(R.id.workoutButton))
+
+        val permissions = arrayOf(android.Manifest.permission.CALL_PHONE, android.Manifest.permission.READ_CONTACTS)
+        findViewById<View>(R.id.navigation_share).setOnClickListener({
+            if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_DENIED ||
+                    ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED){
+                ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_ON_SHARE)
+            }
+            else
+                share()
+
+        })
+
+    }
+
+    fun share(){
+        val intent = Intent(
+                Intent.ACTION_PICK,
+                ContactsContract.Contacts.CONTENT_URI)
+        this.startActivityForResult(intent, PICK_CONTACT)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                           permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSION_REQUEST_ON_SHARE -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    share()
+                } else {
+                }
+            }
+        }
+    }
+
+    public override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent) {
+        d("elo")
+        super.onActivityResult(reqCode, resultCode, data)
+
+        when (reqCode) {
+            PICK_CONTACT -> if (resultCode == Activity.RESULT_OK) {
+                d("zaczynamy")
+                val returnUri = data.data
+                val cursor = contentResolver.query(returnUri, null, null, null, null)
+
+                if (cursor!!.moveToNext()) {
+                    val columnIndex_ID = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+                    val contactID = cursor.getString(columnIndex_ID)
+
+                    val columnIndex_HASPHONENUMBER = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
+                    val stringHasPhoneNumber = cursor.getString(columnIndex_HASPHONENUMBER)
+
+                    if (stringHasPhoneNumber.equals("1", ignoreCase = true)) {
+                        val cursorNum = contentResolver.query(
+                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                null,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactID, null, null)
+
+                        //Get the first phone number
+                        if (cursorNum!!.moveToNext()) {
+                            val columnIndex_number = cursorNum.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                            val stringNumber = cursorNum.getString(columnIndex_number)
+                            d(stringNumber)
+                            val phoneIntent = Intent(Intent.ACTION_CALL)
+                            phoneIntent.setData(Uri.parse("tel:" + stringNumber));
+                            try {
+                                this.startActivity(phoneIntent)
+                            }catch(e: Exception){
+
+                            }
+                        }
+
+                    } else {
+                        d("NO Phone Number")
+                    }
+
+
+                } else {
+                    Toast.makeText(applicationContext, "NO data!", Toast.LENGTH_LONG).show()
+                }
+
+
+            }
+        }
+    }
+
+    private fun getPhoneNumber(data: Intent){
+
     }
 
     private fun initViews() {
